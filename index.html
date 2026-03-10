@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Night Owl | HOF x Drake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --midnight-black: #0A0A0A;
+      --canvas-black: #1A1A1A;
+      --ovo-gold: #C4A747;
+      --amber-glow: #D4943A;
+      --bridle-cream: #F2EDE3;
+      --concrete-grey: #8C8C8C;
+      --soft-white: #FAFAF8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--midnight-black);
+      color: var(--bridle-cream);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 4rem;
+      background: transparent;
+      transition: background 0.4s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+    }
+
+    .logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--bridle-cream);
+    }
+
+    .logo span {
+      color: var(--ovo-gold);
+    }
+
+    .nav-cta {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ovo-gold);
+      text-decoration: none;
+      border: 1px solid rgba(196, 167, 71, 0.3);
+      padding: 0.7rem 2rem;
+      transition: all 0.4s ease;
+    }
+
+    .nav-cta:hover {
+      background: var(--ovo-gold);
+      color: var(--midnight-black);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 4rem 8rem;
+      position: relative;
+      background: linear-gradient(
+        180deg,
+        var(--midnight-black) 0%,
+        rgba(10, 10, 10, 0.6) 40%,
+        rgba(196, 167, 71, 0.03) 70%,
+        var(--midnight-black) 100%
+      );
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(196, 167, 71, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--ovo-gold);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.5s forwards;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(3.5rem, 8vw, 8rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--bridle-cream);
+      max-width: 800px;
+      opacity: 0;
+      animation: fadeUp 1.2s ease 0.8s forwards;
+    }
+
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--concrete-grey);
+      margin-top: 2rem;
+      max-width: 600px;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.2s forwards;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 3rem;
+      right: 4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.6s forwards;
+    }
+
+    .scroll-indicator span {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--concrete-grey);
+      writing-mode: vertical-rl;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--ovo-gold), transparent);
+      animation: scrollPulse 2s ease infinite;
+    }
+
+    /* ── NARRATIVE ── */
+    .narrative {
+      padding: 10rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .narrative-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--ovo-gold);
+      margin-bottom: 2rem;
+    }
+
+    .narrative-left {
+      position: sticky;
+      top: 8rem;
+    }
+
+    .narrative-left h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 3rem;
+      line-height: 1.15;
+      color: var(--bridle-cream);
+    }
+
+    .narrative-right p {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.2rem;
+      line-height: 1.9;
+      color: rgba(242, 237, 227, 0.75);
+      margin-bottom: 2rem;
+    }
+
+    .narrative-right p:first-of-type::first-line {
+      color: var(--bridle-cream);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 4rem;
+    }
+
+    .divider-line {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--ovo-gold), transparent);
+      opacity: 0.2;
+    }
+
+    /* ── DETAILS ── */
+    .details {
+      padding: 10rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .details-header {
+      text-align: center;
+      margin-bottom: 6rem;
+    }
+
+    .details-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 2.5rem;
+      color: var(--bridle-cream);
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    .detail-card {
+      padding: 3rem;
+      border: 1px solid rgba(196, 167, 71, 0.1);
+      transition: all 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .detail-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--ovo-gold);
+      transform: scaleX(0);
+      transition: transform 0.5s ease;
+    }
+
+    .detail-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .detail-card:hover {
+      border-color: rgba(196, 167, 71, 0.25);
+      background: rgba(196, 167, 71, 0.02);
+    }
+
+    .detail-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: rgba(196, 167, 71, 0.15);
+      margin-bottom: 1.5rem;
+    }
+
+    .detail-card h3 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ovo-gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .detail-card p {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: rgba(242, 237, 227, 0.65);
+    }
+
+    /* ── SPECS ── */
+    .specs {
+      padding: 8rem 4rem;
+      background: linear-gradient(180deg, var(--midnight-black) 0%, rgba(26, 25, 24, 0.5) 50%, var(--midnight-black) 100%);
+    }
+
+    .specs-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .specs-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--ovo-gold);
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid rgba(242, 237, 227, 0.06);
+    }
+
+    .spec-row:first-child {
+      border-top: 1px solid rgba(242, 237, 227, 0.06);
+    }
+
+    .spec-key {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--concrete-grey);
+    }
+
+    .spec-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.1rem;
+      color: var(--bridle-cream);
+      text-align: right;
+    }
+
+    /* ── COLLABORATOR ── */
+    .collaborator {
+      padding: 10rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .collab-visual {
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, rgba(196, 167, 71, 0.05) 0%, rgba(10, 10, 10, 1) 60%);
+      border: 1px solid rgba(196, 167, 71, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .owl-symbol {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 8rem;
+      font-weight: 300;
+      color: rgba(196, 167, 71, 0.08);
+      user-select: none;
+    }
+
+    .collab-text .narrative-label {
+      margin-bottom: 1.5rem;
+    }
+
+    .collab-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 3rem;
+      color: var(--bridle-cream);
+      margin-bottom: 2rem;
+    }
+
+    .collab-text p {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.15rem;
+      line-height: 1.9;
+      color: rgba(242, 237, 227, 0.7);
+      margin-bottom: 1.5rem;
+    }
+
+    .collab-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--ovo-gold);
+      margin-top: 2rem;
+      padding-left: 1.5rem;
+      border-left: 1px solid rgba(196, 167, 71, 0.3);
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 12rem 4rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(196, 167, 71, 0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 3.5rem;
+      color: var(--bridle-cream);
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-section p {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--concrete-grey);
+      margin-bottom: 3rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--midnight-black);
+      background: var(--ovo-gold);
+      text-decoration: none;
+      padding: 1.2rem 3.5rem;
+      transition: all 0.4s ease;
+    }
+
+    .cta-button:hover {
+      background: var(--bridle-cream);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(196, 167, 71, 0.15);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 3rem 4rem;
+      border-top: 1px solid rgba(242, 237, 227, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer span {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--concrete-grey);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.5rem 2rem; }
+      .hero { padding: 0 2rem 6rem; }
+      .narrative { grid-template-columns: 1fr; gap: 3rem; padding: 6rem 2rem; }
+      .narrative-left { position: static; }
+      .details { padding: 6rem 2rem; }
+      .details-grid { grid-template-columns: 1fr; }
+      .collaborator { grid-template-columns: 1fr; gap: 3rem; padding: 6rem 2rem; }
+      .cta-section { padding: 8rem 2rem; }
+      footer { padding: 2rem; flex-direction: column; gap: 1rem; }
+      .scroll-indicator { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="logo">House of Futures <span>x</span> Drake</div>
+    <a href="#experience" class="nav-cta">Experience</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-label">HOF Collection 001 &mdash; Limited Series</div>
+    <h1>The City Sleeps.<br>You Drive.</h1>
+    <p class="hero-sub">A limited G-Class born from Toronto after midnight &mdash; where warm gold meets midnight black, and the interior feels like a private studio.</p>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- NARRATIVE -->
+  <section class="narrative">
+    <div class="narrative-left reveal">
+      <div class="narrative-label">The Collection</div>
+      <h2>Born from<br>Toronto after<br>midnight.</h2>
+    </div>
+    <div class="narrative-right">
+      <p class="reveal">There is an hour in Toronto when the skyline stops performing. The CN Tower dims to a silhouette. The Gardiner empties. And the city becomes yours.</p>
+      <p class="reveal">The Night Owl is a HOF and Drake collaboration built for that hour. Not a vehicle designed to arrive &mdash; a vehicle designed to move through the world on your own terms, in your own time. The exterior wears Midnight Black in a satin finish that absorbs streetlight rather than reflecting it. Beneath the surface, warm amber illumination traces the cabin architecture like the glow of a recording studio at 3 a.m.</p>
+      <p class="reveal">This draws from Drake's nocturnal Toronto &mdash; the Bridle Path after dark, OVO Sound sessions that stretch until dawn, the quiet confidence of someone who has nothing left to prove. Every material, every detail, every decision speaks that language.</p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div></div>
+
+  <!-- DETAILS -->
+  <section class="details">
+    <div class="details-header reveal">
+      <div class="narrative-label">Design Details</div>
+      <h2>Three decisions that define the collection.</h2>
+    </div>
+    <div class="details-grid">
+      <div class="detail-card reveal">
+        <div class="detail-number">01</div>
+        <h3>Amber Pulse Lighting</h3>
+        <p>Custom warm amber exterior accents replace standard chrome illumination. The light signature references Toronto at golden hour &mdash; except this golden hour happens at midnight. Subtle. Discovered, not announced.</p>
+      </div>
+      <div class="detail-card reveal">
+        <div class="detail-number">02</div>
+        <h3>Bridle Path Interior</h3>
+        <p>Cream and cognac Nappa leather wraps the cabin in the warmth of a private residence. Dark wood veneer and brushed gold metal finishes echo the architectural language of the Bridle Path mansion &mdash; translated into four seats and a steering wheel.</p>
+      </div>
+      <div class="detail-card reveal">
+        <div class="detail-number">03</div>
+        <h3>OVO Owl Integration</h3>
+        <p>The owl appears once. Debossed into the headrest leather, visible only when the light catches it at the right angle. No badges. No logos on the exterior. Discoverable luxury &mdash; a detail that rewards intimacy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECS -->
+  <section class="specs">
+    <div class="specs-inner">
+      <div class="specs-label reveal">Technical Summary</div>
+      <div class="spec-row reveal"><span class="spec-key">Base</span><span class="spec-value">Mercedes-AMG G 63</span></div>
+      <div class="spec-row reveal"><span class="spec-key">Exterior</span><span class="spec-value">Midnight Black Satin</span></div>
+      <div class="spec-row reveal"><span class="spec-key">Interior</span><span class="spec-value">Bridle Path Cream / Cognac Nappa</span></div>
+      <div class="spec-row reveal"><span class="spec-key">Accent Palette</span><span class="spec-value">OVO Gold &middot; Amber Glow</span></div>
+      <div class="spec-row reveal"><span class="spec-key">Metal Finishes</span><span class="spec-value">Brushed Gold &middot; Dark Anodized Aluminum</span></div>
+      <div class="spec-row reveal"><span class="spec-key">Lighting</span><span class="spec-value">Custom Warm Amber LED</span></div>
+      <div class="spec-row reveal"><span class="spec-key">Audio</span><span class="spec-value">Bespoke &middot; Tuned for Low-Frequency Presence</span></div>
+      <div class="spec-row reveal"><span class="spec-key">Production</span><span class="spec-value">Strictly Limited Series</span></div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div></div>
+
+  <!-- COLLABORATOR -->
+  <section class="collaborator">
+    <div class="collab-visual reveal">
+      <div class="owl-symbol">OVO</div>
+    </div>
+    <div class="collab-text">
+      <div class="narrative-label reveal">The Collaborator</div>
+      <h2 class="reveal">Drake</h2>
+      <p class="reveal">Toronto-born, globally resonant. Founder of OVO Sound. His world bridges luxury and hip-hop culture, emotional nostalgia and forward motion.</p>
+      <p class="reveal">The Night Owl is not an endorsement &mdash; it is a co-creation. Drake shaped the palette, directed the interior mood, and defined what this vehicle feels like at 2 a.m. on an empty highway. The owl is his. The restraint is ours. The result belongs to neither &mdash; and to both.</p>
+      <div class="collab-quote reveal">The city sleeps. You drive.</div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="experience">
+    <h2 class="reveal">Experience the Night Owl.</h2>
+    <p class="reveal">Limited series. By appointment at the atelier.</p>
+    <a href="#" class="cta-button reveal">Begin</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>House of Futures &copy; 2026</span>
+    <span>The Night Owl Collection</span>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
